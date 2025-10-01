@@ -1,35 +1,34 @@
 #!/bin/bash
 #
-# Run as root
+# Run as user
 
 set -e
 
 # === 1. Install required packages ===
-apt update
-apt install -y --no-install-recommends \
+sudo apt update
+sudo apt install -y --no-install-recommends \
   xorg \
   xserver-xorg-legacy \
   openbox \
   chromium \
   unclutter-xfixes \
-  console-data \
-  xserver-xorg-input-void
+  console-data 
 
 # === 2. Allow X to start without root ===
-sed -i 's/^allowed_users.*/allowed_users=anybody/' /etc/X11/Xwrapper.config || echo "allowed_users=anybody" >> /etc/X11/Xwrapper.config
+sudo sed -i 's/^allowed_users.*/allowed_users=anybody/' /etc/X11/Xwrapper.config || echo "allowed_users=anybody" >> /etc/X11/Xwrapper.config
 
-# === 3. Add user to groups (maxlew user) ===
-usermod -aG video,audio,input maxlew
+# === 3. Add user to groups ===
+sudo usermod -aG video,audio,input $USER
 
 # === 4. Enable autologin for kiosk on TTY1 ===
 mkdir -p /etc/systemd/system/getty@tty1.service.d
 cat >/etc/systemd/system/getty@tty1.service.d/override.conf <<'EOF'
 [Service]
 ExecStart=
-ExecStart=-/sbin/agetty --autologin maxlew --noclear %I $TERM
+ExecStart=-/sbin/agetty --autologin $USER --noclear %I $TERM
 EOF
 
-# === 5. Setup maxlew .xinitrc ===
+# === 5. Setup .xinitrc ===
 cat > ~/.xinitrc <<'EOF'
 #!/bin/bash
 xset -dpms
@@ -47,14 +46,14 @@ chromium \
   --noerrdialogs \
   --disable-infobars \
   --start-fullscreen \
-  --kiosk "http://example.com"
+  --kiosk "localhost:3000"
 EOF
 
 chmod +x ~/.xinitrc
 
-# === 6. Autostart X for maxlew user ===
+# === 6. Autostart X for $USER ===
 cat > ~/.bash_profile <<'EOF'
-if [[ -z \$DISPLAY ]] && [[ \$(tty) == /dev/tty1 ]]; then
+if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
   startx
 fi
 EOF
