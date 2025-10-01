@@ -14,19 +14,29 @@ sudo apt install -y --no-install-recommends \
   unclutter-xfixes \
   console-data 
 
+echo "1. ✅ === Installation done. ==="
+
+
 # === 2. Allow X to start without root ===
 sudo sed -i 's/^allowed_users.*/allowed_users=anybody/' /etc/X11/Xwrapper.config || echo "allowed_users=anybody" >> /etc/X11/Xwrapper.config
 
+echo "✅ 2. === X is allowed to start without root ==="
+
+
 # === 3. Add user to groups ===
 sudo usermod -aG video,audio,input $USER
+echo "✅ 3. === $USER is added to correct groups ==="
+
 
 # === 4. Enable autologin for kiosk on TTY1 ===
 mkdir -p /etc/systemd/system/getty@tty1.service.d
-cat >/etc/systemd/system/getty@tty1.service.d/override.conf <<'EOF'
+sudo cat >/etc/systemd/system/getty@tty1.service.d/override.conf <<'EOF'
 [Service]
 ExecStart=
 ExecStart=-/sbin/agetty --autologin $USER --noclear %I $TERM
 EOF
+echo "✅ 4. === Autologin for tty1 is enabled for kiosk ==="
+
 
 # === 5. Setup .xinitrc ===
 cat > ~/.xinitrc <<'EOF'
@@ -49,7 +59,11 @@ chromium \
   --kiosk "localhost:3000"
 EOF
 
+echo "✅ 5.1 === .xinitrc is set up for user $USER ==="
+
+
 chmod +x ~/.xinitrc
+echo "✅ 5.2 === .xinitrc has the right permission now. ==="
 
 # === 6. Autostart X for $USER ===
 cat > ~/.bash_profile <<'EOF'
@@ -58,4 +72,5 @@ if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
 fi
 EOF
 
-echo "✅ Maxlew browser setup complete."
+echo "✅ 6. === X is now on autostart for $USER ==="
+echo "✅ Maxlew Videosystem browser setup complete."
