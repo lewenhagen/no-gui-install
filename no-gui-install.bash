@@ -14,7 +14,7 @@ sudo apt install -y --no-install-recommends \
   unclutter-xfixes \
   console-data 
 
-echo "1. ✅ === Installation done. ==="
+echo "✅ 1. === Installation done. ==="
 
 
 # === 2. Allow X to start without root ===
@@ -29,7 +29,7 @@ echo "✅ 3. === $USER is added to correct groups ==="
 
 
 # === 4. Enable autologin for kiosk on TTY1 ===
-mkdir -p /etc/systemd/system/getty@tty1.service.d
+sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
 sudo cat >/etc/systemd/system/getty@tty1.service.d/override.conf <<'EOF'
 [Service]
 ExecStart=
