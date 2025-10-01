@@ -30,7 +30,7 @@ echo "✅ 3. === $USER is added to correct groups ==="
 
 # === 4. Enable autologin for kiosk on TTY1 ===
 sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
-cat >/etc/systemd/system/getty@tty1.service.d/override.conf <<'EOF'
+sudo cat >/etc/systemd/system/getty@tty1.service.d/override.conf <<'EOF'
 [Service]
 ExecStart=
 ExecStart=-/sbin/agetty --autologin $USER --noclear %I $TERM
