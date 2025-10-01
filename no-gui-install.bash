@@ -5,8 +5,8 @@
 set -e
 
 # === 1. Install required packages ===
-sudo apt update
-sudo apt install -y --no-install-recommends \
+apt update
+apt install -y --no-install-recommends \
   xorg \
   xserver-xorg-legacy \
   openbox \
@@ -18,18 +18,18 @@ echo "✅ 1. === Installation done. ==="
 
 
 # === 2. Allow X to start without root ===
-sudo sed -i 's/^allowed_users.*/allowed_users=anybody/' /etc/X11/Xwrapper.config || echo "allowed_users=anybody" >> /etc/X11/Xwrapper.config
+sed -i 's/^allowed_users.*/allowed_users=anybody/' /etc/X11/Xwrapper.config || echo "allowed_users=anybody" >> /etc/X11/Xwrapper.config
 
 echo "✅ 2. === X is allowed to start without root ==="
 
 
 # === 3. Add user to groups ===
-sudo usermod -aG video,audio,input $USER
+usermod -aG video,audio,input $USER
 echo "✅ 3. === $USER is added to correct groups ==="
 
 
 # === 4. Enable autologin for kiosk on TTY1 ===
-sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
+mkdir -p /etc/systemd/system/getty@tty1.service.d
 cat <<'EOF' | sudo tee /etc/systemd/system/getty@tty1.service.d/override.conf > /dev/null
 [Service]
 ExecStart=
