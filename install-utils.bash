@@ -71,7 +71,9 @@ while true; do
     --disable-translate \
     --lang=sv \
     --no-first-run \
-    --no-default-browser-check
+    --no-default-browser-check \
+    --disable-popup-blocking \
+    --incognito \
     --start-fullscreen \
     --kiosk "http://localhost:3000/splashscreen"
 
