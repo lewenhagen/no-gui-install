@@ -10,6 +10,7 @@ set -e
 sudo apt update
 sudo apt install -y --no-install-recommends \
   xorg \
+  curl \
   xserver-xorg-legacy \
   openbox \
   chromium \
@@ -75,6 +76,7 @@ while true; do
     --disable-popup-blocking \
     --incognito \
     --start-fullscreen \
+    --user-data-dir=$HOME/.chromium-kiosk \
     --kiosk "http://localhost:3000/splashscreen"
 
   echo "[WARNING] Chromium crashed or exited, restarting in 5s..." >&2
@@ -96,4 +98,10 @@ fi
 EOF
 
 echo "[OK] 6. === X is now on autostart for $VSUSER ==="
+
+mkdir -p $HOME/.chromium-kiosk
+chmod 700 $HOME/.chromium-kiosk
+
+echo "[OK] 7. === Chrome kiosk has writable file for "never restore" ==="
+
 echo "[DONE] Maxlew Videosystem browser setup complete."
