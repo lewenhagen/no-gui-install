@@ -63,7 +63,7 @@ done
 
 # Start Chromium in kiosk mode
 while true; do
-  chromium-browser \
+  chromium \
     --noerrdialogs \
     --disable-infobars \
     --disable-session-crashed-bubble \
