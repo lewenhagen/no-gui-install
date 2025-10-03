@@ -6,6 +6,13 @@ VSUSER="$USER"
 
 set -e
 
+# === 0. Install Node and npm ===
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+\. "$HOME/.nvm/nvm.sh"
+nvm install --lts
+
+
 # === 1. Install required packages ===
 sudo apt update
 sudo apt install -y --no-install-recommends \
@@ -16,7 +23,7 @@ sudo apt install -y --no-install-recommends \
   unclutter-xfixes \
   console-data 
 
-echo "✅ 1. === Installation done. ==="
+echo "✅ 1. === Installation of prereq. done. ==="
 
 
 # === 2. Allow X to start without root ===
