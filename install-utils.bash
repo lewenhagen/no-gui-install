@@ -66,8 +66,14 @@ while true; do
   chromium-browser \
     --noerrdialogs \
     --disable-infobars \
+    --disable-session-crashed-bubble \
+    --disable-features=TranslateUI \
+    --disable-translate \
+    --lang=sv \
+    --no-first-run \
+    --no-default-browser-check
     --start-fullscreen \
-    --kiosk "http://localhost:3000"
+    --kiosk "http://localhost:3000/splashscreen"
 
   echo "[WARNING] Chromium crashed or exited, restarting in 5s..." >&2
   sleep 5
