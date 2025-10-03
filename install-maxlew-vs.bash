@@ -4,5 +4,7 @@ git clone https://github.com/lewenhagen/maxlew_videosystem_node.git "$HOME/maxle
 
 cd "$HOME/maxlew_videosystem"
 
+source ~/.nvm/nvm.sh
+
 npm install
 
