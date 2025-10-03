@@ -16,7 +16,9 @@ sudo apt install -y --no-install-recommends \
   chromium \
   unclutter-xfixes \
   console-data \
-  git
+  git \
+  jq \
+  nmap
 
 echo "[OK] 1. === Installation of prereq. done. (xorg, xserver-xorg-legacy, openbox, chromium, unclutter-xfixes, console-data, git) ==="
 
@@ -59,7 +61,7 @@ openbox-session &
 
 until curl -s http://localhost:3000 > /dev/null; do
   echo "Waiting for Maxlew server..."
-  sleep 2
+  sleep 1
 done
 
 # Start Chromium in kiosk mode
@@ -77,6 +79,7 @@ while true; do
     --incognito \
     --start-fullscreen \
     --user-data-dir=$HOME/.chromium-kiosk \
+    --force-device-scale-factor=0.75 \
     --kiosk "http://localhost:3000/splashscreen"
 
   echo "[WARNING] Chromium crashed or exited, restarting in 5s..." >&2

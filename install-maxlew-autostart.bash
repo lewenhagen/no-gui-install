@@ -1,5 +1,7 @@
 set -e
 
+
+
 # --- Variables ---
 APP_DIR="$HOME/maxlew_videosystem"
 APP_SCRIPT="index.js"
@@ -7,6 +9,8 @@ SERVICE_NAME="maxlew_videosystem"
 NODE_BIN=$(which node)
 
 echo "[INFO] Setting up Node.js app auto-start for $USER"
+
+
 
 # --- 1. Check if Node.js is installed ---
 if [ -z "$NODE_BIN" ]; then
@@ -17,11 +21,14 @@ if [ -z "$NODE_BIN" ]; then
 fi
 echo "[OK] Node.js is installed: $NODE_BIN"
 
+
+
 # --- 2. Ensure app directory exists ---
 if [ ! -d "$APP_DIR" ]; then
     echo "[INFO] App directory $APP_DIR does not exist. Creating..."
-    mkdir -p "$APP_DIR"
 fi
+
+
 
 # --- 3. Create a basic systemd service ---
 SERVICE_FILE="/etc/systemd/system/$SERVICE_NAME.service"
