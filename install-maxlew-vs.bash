@@ -15,5 +15,5 @@ git clone https://github.com/lewenhagen/maxlew_videosystem_node.git "$HOME/maxle
 
 # source ~/.nvm/nvm.sh
 
-cd "$HOME/maxlew_videosystem" && $(pwd) && npm install
+npm install
 
