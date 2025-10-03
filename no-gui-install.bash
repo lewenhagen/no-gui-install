@@ -28,12 +28,12 @@ sudo usermod -aG video,audio,input $USER
 echo "✅ 3. === $USER is added to correct groups ==="
 
 
-# === 4. Enable autologin for kiosk on TTY1 ===
+# === 4. Enable autologin for $USER on TTY1 ===
 sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
 cat <<'EOF' | sudo tee /etc/systemd/system/getty@tty1.service.d/override.conf > /dev/null
 [Service]
 ExecStart=
-ExecStart=-/sbin/agetty --autologin kiosk --noclear %I $TERM
+ExecStart=-/sbin/agetty --autologin $USER --noclear %I $TERM
 EOF
 echo "✅ 4. === Autologin for tty1 is enabled for kiosk ==="
 
@@ -52,11 +52,16 @@ unclutter --timeout 0 --hide-on-touch &
 openbox-session &
 
 # Start Chromium in kiosk mode
-chromium \
-  --noerrdialogs \
-  --disable-infobars \
-  --start-fullscreen \
-  --kiosk "localhost:3000"
+while true; do
+  chromium-browser \
+    --noerrdialogs \
+    --disable-infobars \
+    --start-fullscreen \
+    --kiosk "http://localhost:3000"
+
+  echo "⚠️ Chromium crashed or exited, restarting in 5s..." >&2
+  sleep 5
+done
 EOF
 
 echo "✅ 5.1 === .xinitrc is set up for user $USER ==="
