@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # Run as user
+
 VSUSER="$USER"
 
 set -e
@@ -31,7 +32,7 @@ echo "✅ 3. === $VSUSER is added to correct groups ==="
 
 # === 4. Enable autologin for $VSUSER on TTY1 ===
 sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
-cat <<'EOF' | sudo tee /etc/systemd/system/getty@tty1.service.d/override.conf > /dev/null
+cat << EOF | sudo tee /etc/systemd/system/getty@tty1.service.d/override.conf > /dev/null
 [Service]
 ExecStart=
 ExecStart=-/sbin/agetty --autologin $VSUSER --noclear %I $TERM
