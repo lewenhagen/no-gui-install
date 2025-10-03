@@ -6,16 +6,6 @@ VSUSER="$USER"
 
 set -e
 
-# === 0. Install Node and npm ===
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-
-source ~/.nvm/nvm.sh
-
-nvm install --lts
-
-source ~/.nvm/nvm.sh
-
 # === 1. Install required packages ===
 sudo apt update
 sudo apt install -y --no-install-recommends \

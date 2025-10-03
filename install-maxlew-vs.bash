@@ -1,10 +1,19 @@
 #!/bin/bash
 
-git clone https://github.com/lewenhagen/maxlew_videosystem_node.git "$HOME/maxlew_videosystem"
+function printStatus
+{
+  echo "=== [OK] $1 ==="
+}
 
-cd "$HOME/maxlew_videosystem"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 
-source ~/.nvm/nvm.sh
+source ~/.nvm/nvm.sh && printStatus "nvm sourced"
 
-npm install
+nvm install --lts && printStatus "Node and npm installed"
+
+git clone https://github.com/lewenhagen/maxlew_videosystem_node.git "$HOME/maxlew_videosystem" && printStatus "Maxlew Videosystem cloned" 
+
+# source ~/.nvm/nvm.sh
+
+cd "$HOME/maxlew_videosystem" && $(pwd) && npm install
 
