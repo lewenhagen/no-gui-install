@@ -54,10 +54,50 @@ EOF
 
 echo "[OK] Systemd service created at $SERVICE_FILE"
 
+
+
+CONFIG_FILE="/etc/X11/xorg.conf.d/99-vc4.conf"
+CONFIG_DIR="/etc/X11/xorg.conf.d"
+CONFIG_CONTENT='
+Section "OutputClass"
+    Identifier "vc4"
+    MatchDriver "vc4"
+    Driver "modesetting"
+    Option "PrimaryGPU" "true"
+EndSection
+'
+
+echo "Starting Xorg configuration fix..."
+
+# 1. Create the configuration directory if it doesn't exist
+if [ ! -d "$CONFIG_DIR" ]; then
+    echo "Creating directory: $CONFIG_DIR"
+    sudo mkdir -p "$CONFIG_DIR"
+else
+    echo "Directory already exists: $CONFIG_DIR"
+fi
+
+# 2. Write the configuration content to the file
+echo "Writing configuration to $CONFIG_FILE"
+echo "$CONFIG_CONTENT" | sudo tee "$CONFIG_FILE" > /dev/null
+
+echo "[DONE] $CONFIG_FILE created."
+
+
 # --- 4. Enable and start the service ---
 sudo systemctl daemon-reload
 sudo systemctl enable $SERVICE_NAME.service
 sudo systemctl start $SERVICE_NAME.service
 
 echo "[DONE] $SERVICE_NAME service enabled and started."
-echo "Use 'systemctl status $SERVICE_NAME' to check logs."
+echo "----------------------- Rebooting -----------------------"
+
+read -r -p "Reboot now? [Y/n] " choice
+    
+# Default to 'Y' if the user just presses Enter
+if [[ "$choice" =~ ^[Yy]$ || -z "$choice" ]]; then
+    echo "Rebooting system now..."
+    sudo reboot
+else
+    echo "Please remember to reboot manually to apply the Xorg fix and test the system."
+fi
