@@ -5,7 +5,7 @@ function printStatus
   echo "=== [OK] $1 ==="
 }
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+curl -s -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 
 source ~/.nvm/nvm.sh && printStatus "nvm sourced"
 
