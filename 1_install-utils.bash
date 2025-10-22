@@ -82,6 +82,11 @@ unclutter --timeout 0 --hide-on-touch &
 # Start Openbox
 openbox-session &
 export DISPLAY=:0
+export XAUTHORITY=$HOME/.Xauthority
+
+sleep 2
+xrandr --output $(xrandr | grep " connected" | cut -d" " -f1) --mode 1920x1080 --rate 60
+
 # Wait for n seconds before boot this stuff
 
 until curl -s http://localhost:3000 > /dev/null; do
