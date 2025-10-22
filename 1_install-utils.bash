@@ -80,12 +80,19 @@ xset s noblank
 unclutter --timeout 0 --hide-on-touch &
 
 # Start Openbox
-openbox-session &
 export DISPLAY=:0
 export XAUTHORITY=$HOME/.Xauthority
 
-sleep 2
-xrandr --output $(xrandr | grep " connected" | cut -d" " -f1) --mode 1920x1080 --rate 60
+
+while ! xrandr | grep " connected"; do
+  sleep 1
+done
+
+for output in $(xrandr | grep " connected" | cut -d" " -f1); do
+  xrandr --output "$output" --mode 1920x1080 --rate 60
+done
+
+openbox-session &
 
 # Wait for n seconds before boot this stuff
 
