@@ -81,7 +81,7 @@ unclutter --timeout 0 --hide-on-touch &
 
 # Start Openbox
 openbox-session &
-
+export DISPLAY=:0
 # Wait for n seconds before boot this stuff
 
 until curl -s http://localhost:3000 > /dev/null; do
