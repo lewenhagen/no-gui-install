@@ -105,8 +105,6 @@ while true; do
     --incognito \
     --start-fullscreen \
     --user-data-dir=$HOME/.chromium-kiosk \
-    --high-dpi-support=0 \
-    --force-device-scale-factor=0.75 \
     --kiosk "http://localhost:3000/splashscreen"
 
   echo "[WARNING] Chromium crashed or exited, restarting in 5s..." >&2
