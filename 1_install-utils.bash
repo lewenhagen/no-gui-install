@@ -89,7 +89,7 @@ while ! xrandr | grep " connected"; do
 done
 
 for output in $(xrandr | grep " connected" | cut -d" " -f1); do
-  xrandr --output "$output" --mode 1920x1080 --rate 60
+  xrandr --output "$output" --mode 2560x1440 --rate 60
 done
 
 openbox-session &
