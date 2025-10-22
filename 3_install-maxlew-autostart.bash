@@ -40,6 +40,8 @@ After=network.target
 [Service]
 ExecStart=$NODE_BIN $APP_DIR/$APP_SCRIPT
 WorkingDirectory=$APP_DIR
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/$USER/.Xauthority
 Restart=always
 RestartSec=5
 User=$USER
@@ -53,7 +55,6 @@ WantedBy=multi-user.target
 EOF
 
 echo "[OK] Systemd service created at $SERVICE_FILE"
-
 
 
 CONFIG_FILE="/etc/X11/xorg.conf.d/99-vc4.conf"
