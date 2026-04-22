@@ -8,6 +8,7 @@ function printStatus
 curl -s -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 
 source ~/.nvm/nvm.sh && printStatus "nvm sourced"
+source ~/.bashrc 
 
 nvm install --lts && printStatus "Node and npm installed"
 
