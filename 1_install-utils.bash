@@ -249,6 +249,7 @@ while true; do
     --disable-features=TranslateUI,Translate \
     --disable-translate \
     --lang=sv \
+    --accept-lang=sv \
     --no-first-run \
     --no-default-browser-check \
     --disable-popup-blocking \
@@ -288,7 +289,14 @@ mkdir -p "$HOME/.chromium-kiosk/Default"
 cat > "$HOME/.chromium-kiosk/Default/Preferences" <<'EOF'
 {
   "exit_type": "Normal",
-  "exited_cleanly": true
+  "exited_cleanly": true,
+  "translate": {
+    "enabled": false
+  },
+  "translate_blocked_languages": ["sv"],
+  "intl": {
+    "accept_languages": "sv,sv-SE"
+  }
 }
 EOF
 
